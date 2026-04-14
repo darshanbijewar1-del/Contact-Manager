@@ -1,15 +1,16 @@
 public class PersonalContact extends Contact {
     private String relation;
 
-    public personalContact(String name , String phone , string relation){
-        super(name , phone);
+    public PersonalContact(String name, String phone, String relation) {
+        super(name, phone);
         this.relation = relation;
     }
 
-    public String displayInfo(){
+    @Override
+    public void displayInfo() {
         System.out.println("Personal Contact");
-        System.out.println("name" + getName());
-        System.out.println("phone" + getPhone());
-        System.out.println("relation" + relation);
+        System.out.println("Name: " + getName());
+        System.out.println("Phone: " + getPhone());
+        System.out.println("Relation: " + relation);
     }
 }
