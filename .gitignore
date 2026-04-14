@@ -1,1 +1,6 @@
 *.class
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
