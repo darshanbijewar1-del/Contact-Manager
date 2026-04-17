@@ -7,6 +7,10 @@ public class BusinessContact extends Contact {
         this.company = company;
     }
 
+    public String getCompany(){
+        return company;
+    }
+
     @Override
     public void displayInfo() {
         System.out.println("Business Contact");

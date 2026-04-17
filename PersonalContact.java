@@ -6,6 +6,10 @@ public class PersonalContact extends Contact {
         this.relation = relation;
     }
 
+        public String getRelation(){
+            return relation;
+        }
+
     @Override
     public void displayInfo() {
         System.out.println("Personal Contact");

@@ -5,7 +5,8 @@ public class Main {
 
         Scanner s = new Scanner(System.in);
         ContactManager manager = new ContactManager();
-
+        manager.loadFromFile();
+        
         while(true){
             System.out.println("\n1. ADD PERSONAL CONTACT");
             System.out.println("2. ADD BUSINESS CONTACT");
@@ -48,6 +49,7 @@ public class Main {
                 }
 
                 case 4 -> {
+                    manager.saveToFile();
                     System.out.println("Exiting...");
                     return;
                 }
