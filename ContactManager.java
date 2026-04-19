@@ -71,4 +71,22 @@ public class ContactManager {
                 System.out.println("ERROR Loading File");
             }
         }
+
+        public String getAllContacts(){
+            String result = "";
+            for (Contact c : contacts){
+                if (c instanceof PersonalContact){
+                    PersonalContact p = (PersonalContact) c;
+                    
+                    result += "Personal : "+ p.getName() + "," + p.getPhone() +"," + p.getRelation() + "\n";
+                }
+                else if ( c instanceof BusinessContact){
+                    BusinessContact b = (BusinessContact) c;
+                    result += "Bisiness : " + b.getName() + "," + b.getPhone()+","+ b.getCompany();
+                }
+
+                
+            }
+            return result;
+        }
 }
