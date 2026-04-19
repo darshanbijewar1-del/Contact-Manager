@@ -10,6 +10,9 @@ public class BusinessContact extends Contact {
     public String getCompany(){
         return company;
     }
+    public void setCompany(String company){
+        this.company = company;
+    }
 
     @Override
     public void displayInfo() {

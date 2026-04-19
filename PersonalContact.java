@@ -9,6 +9,9 @@ public class PersonalContact extends Contact {
         public String getRelation(){
             return relation;
         }
+        public void setRelation(String relation){
+            this.relation = relation;
+        }
 
     @Override
     public void displayInfo() {

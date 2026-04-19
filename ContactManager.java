@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.io.*;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 
 public class ContactManager {
@@ -89,4 +90,35 @@ public class ContactManager {
             }
             return result;
         }
+
+        public void deleteContact(String name){
+
+            contacts.removeIf(c -> c.getName().equalsIgnoreCase(name));
+            saveToFile();
+        }
+
+ public boolean updateContact(String phone, String newName, String newExtra) {
+
+    for (Contact c : contacts) {
+
+        if (c.getPhone().equals(phone)) {
+
+            if (c instanceof PersonalContact) {
+                PersonalContact p = (PersonalContact) c;
+                p.setName(newName);
+                p.setRelation(newExtra);
+            }
+
+            else if (c instanceof BusinessContact) {
+                BusinessContact b = (BusinessContact) c;
+                b.setName(newName);
+                b.setCompany(newExtra);
+            }
+
+            return true;
+        }
+    }
+
+    return false;
+}
 }

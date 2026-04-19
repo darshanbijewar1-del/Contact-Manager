@@ -3,17 +3,15 @@ import javax.swing.*;
 public class ContactGUI {
 
     ContactManager manager = new ContactManager();
-    
-    
 
     public ContactGUI() {
 
         JFrame frame = new JFrame();
-
         frame.setTitle("My Contact System");
-        frame.setSize(400, 350);
+        frame.setSize(400, 500);  // FIXED SIZE
         frame.setLayout(null);
 
+        // Fields
         JTextField nameField = new JTextField();
         nameField.setBounds(50, 50, 200, 30);
 
@@ -23,19 +21,43 @@ public class ContactGUI {
         JTextField extraField = new JTextField();
         extraField.setBounds(50, 150, 200, 30);
 
-        JButton pbtn = new JButton("ADD Personal");
+        // Buttons
+        JButton pbtn = new JButton("Add Personal");
         pbtn.setBounds(50, 200, 150, 30);
 
-        JButton bbtn = new JButton("ADD Business");
+        JButton bbtn = new JButton("Add Business");
         bbtn.setBounds(50, 240, 150, 30);
 
+        JButton displayBtn = new JButton("Display");
+        displayBtn.setBounds(220, 200, 120, 30);
+
+        JButton deleteBtn = new JButton("Delete");
+        deleteBtn.setBounds(220, 240, 120, 30);
+
+        JButton updateBtn = new JButton("Update");
+        updateBtn.setBounds(220, 280, 120, 30);
+
+        // Text Area
+        JTextArea area = new JTextArea();
+        area.setBounds(50, 330, 1200, 360);
+
+        // Add components
         frame.add(nameField);
         frame.add(phoneField);
         frame.add(extraField);
+
         frame.add(pbtn);
         frame.add(bbtn);
+        frame.add(displayBtn);
+        frame.add(deleteBtn);
+        frame.add(updateBtn);
+        frame.add(area);
 
-        // Action - Personal
+        // Load data on start
+        manager.loadFromFile();
+        area.setText(manager.getAllContacts());
+
+        // Add Personal
         pbtn.addActionListener(e -> {
             String name = nameField.getText();
             String phone = phoneField.getText();
@@ -43,10 +65,15 @@ public class ContactGUI {
 
             manager.addContact(new PersonalContact(name, phone, relation));
             manager.saveToFile();
-            System.out.println("Personal Contact Saved");
+
+            area.setText(manager.getAllContacts());
+
+            nameField.setText("");
+            phoneField.setText("");
+            extraField.setText("");
         });
 
-        // Action - Business
+        // Add Business
         bbtn.addActionListener(e -> {
             String name = nameField.getText();
             String phone = phoneField.getText();
@@ -54,26 +81,47 @@ public class ContactGUI {
 
             manager.addContact(new BusinessContact(name, phone, company));
             manager.saveToFile();
-            System.out.println("Business Contact Added");
+
+            area.setText(manager.getAllContacts());
+
+            nameField.setText("");
+            phoneField.setText("");
+            extraField.setText("");
         });
 
-        JTextArea area = new JTextArea();
-        area.setBounds(50,280,300,100);
-
-        frame.add(area);
-        manager.loadFromFile();  // load data from file
-
-        area.setText(manager.getAllContacts());  // show in GUI
-        
-        JButton displayBtn = new JButton("Display Contact");
-        displayBtn.setBounds(220,200,150,30);
-        frame.add(displayBtn);
-
-        displayBtn.addActionListener(e ->{
-            String data = manager.getAllContacts();
-            area.setText(data);
+        // Display
+        displayBtn.addActionListener(e -> {
+            area.setText(manager.getAllContacts());
         });
-        
+
+        // Delete (by phone recommended)
+        deleteBtn.addActionListener(e -> {
+            String name = nameField.getText();
+
+            manager.deleteContact(name);
+            manager.saveToFile();
+
+            area.setText(manager.getAllContacts());
+        });
+
+        // Update (by phone)
+        updateBtn.addActionListener(e -> {
+            String name = nameField.getText();
+            String phone = phoneField.getText();
+            String extra = extraField.getText();
+
+            boolean result = manager.updateContact(phone, name, extra);
+
+            if (result) {
+                JOptionPane.showMessageDialog(null, "Contact Updated");
+            } else {
+                JOptionPane.showMessageDialog(null, "Contact Not Found");
+            }
+
+            manager.saveToFile();
+            area.setText(manager.getAllContacts());
+        });
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
